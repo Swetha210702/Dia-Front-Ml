@@ -94,3 +94,5 @@ Manrope and DM Mono fonts are distributed with their SIL Open Font License files
 ## GitHub Pages
 
 The demo is published from main / (root) at https://swetha210702.github.io/Dia-Front-Ml/. Relative asset paths and module-relative logo URLs support both localhost and the GitHub repository subpath. The .nojekyll file keeps the frontend as plain static assets. Push changes to main to trigger the configured Pages deployment; no Node server runs on GitHub Pages.
+
+Dark mode uses a chat-style charcoal palette (#212121 canvas, #171717 navigation), neutral elevated surfaces, grey borders, and light primary actions. Light mode retains the supplied #ECEAE3 background and Dietograms colours.

@@ -1,0 +1,79 @@
+/* Chat-style charcoal workspace. These overrides apply only to dark mode. */
+html[data-theme=dark]{--page:#212121;--surface:#272727;--surface-alt:#2f2f2f;--surface-hover:#383838;--ink:#ececec;--muted:#b0b0b0;--line:#3d3d3d;--brand:#ececec;--brand-hover:#ffffff;--brand-soft:#333333;--gold:#ececec;--peach:#bdbdbd;--mint:#a6c7b1;--coral:#e5aaaa;--sky:#b9c5d7;color-scheme:dark}
+html[data-theme=dark] body,html[data-theme=dark] .workspace,html[data-theme=dark] .main-content,html[data-theme=dark] .topbar{background:#212121;color:#ececec}
+html[data-theme=dark] .sidebar{background:#171717;border-color:#303030}
+html[data-theme=dark] .panel,html[data-theme=dark] .modal,html[data-theme=dark] .login-form-card,html[data-theme=dark] .setup-card,html[data-theme=dark] .intake-stepper{background:#272727;border-color:#3d3d3d;box-shadow:none;border-radius:8px}
+html[data-theme=dark] .primary,html[data-theme=dark] .light{background:#ececec;color:#171717;border-color:#ececec;box-shadow:none;border-radius:6px}
+html[data-theme=dark] .primary:hover,html[data-theme=dark] .light:hover{background:#fff;color:#171717;border-color:#fff;box-shadow:none}
+html[data-theme=dark] .secondary,html[data-theme=dark] .icon-button,html[data-theme=dark] .theme-toggle,html[data-theme=dark] .warm-panel .secondary{background:#2f2f2f;color:#ececec;border-color:#484848;box-shadow:none;border-radius:6px}
+html[data-theme=dark] .secondary:hover,html[data-theme=dark] .icon-button:hover,html[data-theme=dark] .theme-toggle:hover{background:#3a3a3a;border-color:#626262}
+html[data-theme=dark] .nav-item{color:#c1c1c1;border-radius:6px}
+html[data-theme=dark] .nav-item:hover{background:#272727;color:#f1f1f1}
+html[data-theme=dark] .nav-item.active{background:#303030;color:#f5f5f5}
+html[data-theme=dark] .nav-item.active:before{background:#aaa}
+html[data-theme=dark] .nav-label,html[data-theme=dark] .eyebrow,html[data-theme=dark] .hero-panel .eyebrow,html[data-theme=dark] .warm-panel .eyebrow{color:#a3a3a3}
+html[data-theme=dark] .workspace-select,html[data-theme=dark] .credit-card,html[data-theme=dark] .client-context{background:#252525;border-color:#3b3b3b}
+html[data-theme=dark] .workspace-icon{background:#383838;color:#e2e2e2}
+html[data-theme=dark] .dietograms-logo,html[data-theme=dark] .topbar .mobile-brand .dietograms-logo{filter:grayscale(1) invert(1);mix-blend-mode:lighten;background:transparent}
+html[data-theme=dark] .hero-panel,html[data-theme=dark] .warm-panel{background:#292929;border-color:#414141;box-shadow:none}
+html[data-theme=dark] .hero-panel h2,html[data-theme=dark] .warm-panel h2,html[data-theme=dark] .page-heading h1,html[data-theme=dark] .intake-banner h2,html[data-theme=dark] .intake-section-heading h2,html[data-theme=dark] .intake-help h3,html[data-theme=dark] .intake-summary-section h3{color:#ededed}
+html[data-theme=dark] .hero-panel p,html[data-theme=dark] .warm-panel p,html[data-theme=dark] .hero-note{color:#b4b4b4}
+html[data-theme=dark] .hero-mini{background:#242424;border-color:#424242}
+html[data-theme=dark] .hero-rings{border-color:#494949;box-shadow:none}
+html[data-theme=dark] .metrics-grid>.metric:nth-child(n){background:#282828;border-color:#3d3d3d;box-shadow:none;border-radius:8px}
+html[data-theme=dark] .metrics-grid>.metric:nth-child(n)>strong,html[data-theme=dark] .pulse-number,html[data-theme=dark] .completion-number,html[data-theme=dark] .balance{color:#f1f1f1}
+html[data-theme=dark] .metrics-grid>.metric:nth-child(n):before{background:#646464;height:2px}
+html[data-theme=dark] .metric>span,html[data-theme=dark] .metric>small{color:#aeaeae}
+html[data-theme=dark] th{background:#2e2e2e;color:#b1b1b1;border-color:#404040}
+html[data-theme=dark] td{border-color:#383838;color:#bfbfbf}
+html[data-theme=dark] td strong,html[data-theme=dark] .activity-row strong,html[data-theme=dark] .client-cell strong{color:#e3e3e3}
+html[data-theme=dark] .bar-chart i{background:linear-gradient(#777,#484848)}
+html[data-theme=dark] .bar-chart>div:last-child i{background:linear-gradient(#d4d4d4,#929292)}
+html[data-theme=dark] .bar-chart span,html[data-theme=dark] .bar-chart small{color:#b4b4b4}
+html[data-theme=dark] .progress-track,html[data-theme=dark] .credit-card .progress-track{background:#404040}
+html[data-theme=dark] .progress-track i{background:#c9c9c9}
+html[data-theme=dark] input,html[data-theme=dark] textarea,html[data-theme=dark] select,html[data-theme=dark] .select-trigger{background:#303030;color:#ececec;border-color:#4a4a4a;border-radius:6px}
+html[data-theme=dark] input::placeholder,html[data-theme=dark] textarea::placeholder{color:#969696}
+html[data-theme=dark] #global-search{background:#2f2f2f;border-color:#3f3f3f}
+html[data-theme=dark] #global-search input{background:transparent}
+html[data-theme=dark] .select-menu{background:#2f2f2f;border-color:#505050;box-shadow:0 10px 28px #0005}
+html[data-theme=dark] .select-option{color:#e4e4e4}
+html[data-theme=dark] .select-option:hover,html[data-theme=dark] .select-option:focus-visible{background:#414141}
+html[data-theme=dark] .select-option[aria-selected=true]{background:#454545;color:#fff}
+html[data-theme=dark] .select-option b{color:#ececec}
+html[data-theme=dark] .select-control.open .select-trigger{border-color:#aaa;box-shadow:0 0 0 2px #aaa2}
+html[data-theme=dark] .select-search{background:#252525}
+html[data-theme=dark] .intake-form input:not([type=checkbox]):not([type=radio]),html[data-theme=dark] .intake-form textarea,html[data-theme=dark] .intake-form .select-trigger{background:#303030;border-color:#4a4a4a}
+html[data-theme=dark] .choice-card{background:#2b2b2b;border-color:#484848;border-radius:6px}
+html[data-theme=dark] .choice-card:hover{background:#343434;border-color:#777}
+html[data-theme=dark] .choice-card:has(input:checked){background:#383838;border-color:#a0a0a0;box-shadow:inset 2px 0 #dedede}
+html[data-theme=dark] .choice-card>input[type=radio],html[data-theme=dark] input[type=checkbox]{accent-color:#d7d7d7}
+html[data-theme=dark] .section-number,html[data-theme=dark] .intake-progress-card li>span{color:#a5a5a5}
+html[data-theme=dark] .intake-stepper>.current{background:#383838;color:#f1f1f1}
+html[data-theme=dark] .intake-stepper>.current>span,html[data-theme=dark] .intake-stepper>.done>span,html[data-theme=dark] .intake-progress-card li>.complete{color:#e5e5e5}
+html[data-theme=dark] .intake-banner{border-color:#5d5d5d}
+html[data-theme=dark] .intake-summary-section,html[data-theme=dark] .client-agreement{background:#292929;border-color:#444}
+html[data-theme=dark] .practice-documents>div,html[data-theme=dark] .assessment-sheet{background:#303030;color:#e3e3e3;border-color:#525252;box-shadow:6px 6px 0 #181818}
+html[data-theme=dark] .practice-documents small,html[data-theme=dark] .assessment-sheet>span,html[data-theme=dark] .practice-documents b,html[data-theme=dark] .assessment-sheet>small{color:#b3b3b3}
+html[data-theme=dark] .practice-documents strong,html[data-theme=dark] .assessment-sheet>strong{border-color:#aaa}
+html[data-theme=dark] .practice-documents i,html[data-theme=dark] .assessment-sheet>i{border-color:#515151}
+html[data-theme=dark] .notice{background:#303030;color:#c4c4c4;border-color:#474747}
+html[data-theme=dark] .doc-icon{background:#323232;color:#cfcfcf;border-color:#4a4a4a}
+html[data-theme=dark] .chip.active,html[data-theme=dark] .client-list-item.selected{background:#393939;color:#f2f2f2;border-color:#848484}
+html[data-theme=dark] .badge.draft,html[data-theme=dark] .badge.running,html[data-theme=dark] .badge.read{background:#3b3b3b;color:#d8d8d8}
+html[data-theme=dark] .badge.paused,html[data-theme=dark] .badge.cancelled{background:#433d32;color:#d7c7a6}
+html[data-theme=dark] .badge.active,html[data-theme=dark] .badge.published,html[data-theme=dark] .badge.paid,html[data-theme=dark] .badge.completed,html[data-theme=dark] .badge.on-track{background:#2d3c34;color:#a9cbb7}
+html[data-theme=dark] .avatar,html[data-theme=dark] .avatar.rose,html[data-theme=dark] .avatar.blue,html[data-theme=dark] .avatar.green,html[data-theme=dark] .avatar.purple{background:#3b3b3b;color:#d1d1d1}
+html[data-theme=dark] .pricing-card.selected{background:#2c2c2c;border-color:#aaa;box-shadow:0 0 0 1px #aaa}
+html[data-theme=dark] .topup-card{background:#2d2d2d;border-color:#494949}
+html[data-theme=dark] .topup-card:hover{background:#393939;border-color:#909090}
+html[data-theme=dark] .topup-card strong{color:#ececec}
+html[data-theme=dark] .rich-toolbar{background:#272727;border-color:#474747}
+html[data-theme=dark] .format-button{background:#303030;color:#e0e0e0;border-color:#484848}
+html[data-theme=dark] .format-button:hover{background:#414141;color:#fff}
+html[data-theme=dark] .document-canvas{background:#181818;border-color:#444}
+html[data-theme=dark] .theme-symbol{background:#d2d2d2;box-shadow:0 0 0 2px #d2d2d220}
+html[data-theme=dark] .toast{background:#3d3d3d;border:1px solid #656565;color:#f1f1f1}
+html[data-theme=dark] .demo-pill{background:#303030;color:#b5b5b5;border-color:#484848}
+html[data-theme=dark] button:focus-visible,html[data-theme=dark] a:focus-visible,html[data-theme=dark] input:focus-visible,html[data-theme=dark] textarea:focus-visible{outline-color:#b6b6b6}
+@media print{html[data-theme=dark],html[data-theme=dark] body,html[data-theme=dark] .workspace,html[data-theme=dark] .main-content,html[data-theme=dark] .document-canvas{background:white;color:black}.report-page{box-shadow:none}}
