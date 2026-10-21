@@ -23,7 +23,8 @@ First sign-in requires general profile, company details, and simulated bank veri
 - Editable client records, notes, diet plans, saved questionnaires, and progress check-ins.
 - Per-client questionnaire drafts, autosave, refresh/resume, review, and optional client-record updates.
 - Standard, Pro, and Plus model previews, simulated generation events, credit deductions, retries, cancellation, and refunds.
-- Generation history and background status tracking.
+- Generation history with persistent, timestamped phase updates and background status tracking.
+- Seamless navigation without artificial page loaders; a compact, centred three-fruit loading indicator appears only during generation.
 - Report studio with editable meals, quantities, calories, logos, colours, typography, and layout.
 - Selection-based bold, italic, underline, strikethrough, lists, alignment, undo/redo, and clear formatting for document introduction and guidance.
 - 38 font families, custom installed-font names, 8–72 px text, heading sizes, line/paragraph spacing, margins, A4/Letter/Legal, portrait/landscape, table spacing, and footer controls.
@@ -68,7 +69,7 @@ npm run check
 npm test
 ```
 
-The tests cover mandatory answers, optional fields, agreement validation, allowed options, invalid measurements/times, legacy autofill, questionnaire snapshots, and client-record mapping. Browser checks covered the staged flow, refresh/resume, generation gating, saved client assessment, theme switching, search/autofill, and responsive layouts.
+The tests also verify generation phase ordering, background catch-up, legacy history, cancellation, and completion progress. The tests cover mandatory answers, optional fields, agreement validation, allowed options, invalid measurements/times, legacy autofill, questionnaire snapshots, and client-record mapping. Browser checks covered the staged flow, refresh/resume, generation gating, saved client assessment, theme switching, search/autofill, and responsive layouts.
 
 ## Source structure
 

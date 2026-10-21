@@ -1,0 +1,35 @@
+/* Genuine waits belong to their operation; navigation has no blocking overlay. */
+.job-view{--job-accent:#08783e;--job-border:#dedfd9;--job-soft:#f3f7f2;--job-muted:#626c65;max-width:960px;margin-inline:auto}
+html[data-theme=dark] .job-view{--job-accent:#e3e3e3;--job-border:#424242;--job-soft:#2a2a2a;--job-muted:#b4b4b4}
+.generation-heading{text-align:center;padding:16px 12px 24px}
+.generation-heading h3{font-size:21px;margin:14px 0 8px;line-height:1.4}
+.generation-heading p{font-size:12px;line-height:1.7;margin:0 auto 12px;max-width:480px}
+.generation-demo-label{font-size:10px;font-weight:600;letter-spacing:.02em;color:var(--job-muted)}
+.compact-fruit-loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;width:fit-content;margin:0 auto;color:var(--job-muted);font-size:11px;font-weight:600}
+.compact-fruit-row{display:flex;align-items:center;justify-content:center;gap:9px;height:34px}
+.loader-fruit-slot{position:relative;display:block;width:25px;height:29px;animation:small-fruit-bob 1.5s ease-in-out infinite}
+.loader-fruit-slot:nth-child(2){animation-delay:.16s}.loader-fruit-slot:nth-child(3){animation-delay:.32s}
+.loader-fruit-slot>.fruit{position:absolute!important;left:50%!important;top:50%!important;margin:0!important;transform:translate(-50%,-50%) scale(.52)!important;animation:none!important}
+@keyframes small-fruit-bob{0%,65%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+.generation-result{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;margin:0 auto;background:var(--job-soft);color:var(--job-accent);font-size:20px}
+.generation-live-status{display:flex;flex-direction:column;gap:6px;padding:16px 18px;background:var(--job-soft);border:1px solid var(--job-border);border-radius:8px;margin-bottom:18px}
+.generation-live-status strong{font-size:13px;color:var(--job-accent)}.generation-live-status span{font-size:12px;line-height:1.6;color:var(--job-muted)}
+.job-view .progress-caption{display:flex;justify-content:space-between;align-items:center;margin:0 0 9px;font-size:11px;color:var(--job-muted)}
+.job-view .generation-progress{height:6px;margin:0;background:var(--job-border)}.job-view .generation-progress i{background:var(--job-accent);transition:width .45s ease}
+.generation-detail-grid{display:grid;grid-template-columns:minmax(200px,.8fr) minmax(250px,1.2fr);gap:28px;margin-top:28px}
+.generation-detail-grid h4{font-size:12px;margin:0 0 14px}.job-view .generation-stages{margin:0}
+.job-view .generation-stages li{font-size:11px;padding:9px 0;color:var(--job-muted);align-items:flex-start;gap:10px}
+.job-view .generation-stages li>span{flex-shrink:0;width:23px;height:23px;border-color:var(--job-border)}
+.job-view .generation-stages small{font-size:10px;margin-top:4px;line-height:1.5}.job-view .generation-stages li>div{padding-top:2px}
+.job-view .generation-stages .current,.job-view .generation-stages .done{color:var(--job-accent)}
+.job-view .generation-stages .current>span{border-color:var(--job-accent);box-shadow:none;background:var(--job-soft)}
+.job-view .generation-stages .done>span{background:var(--job-soft);border-color:var(--job-border)}
+.generation-activity{border-left:1px solid var(--job-border);padding-left:24px;min-width:0}.generation-activity ol{list-style:none;padding:0;margin:0}
+.generation-activity li{display:grid;grid-template-columns:66px 1fr;gap:10px;padding:0 0 17px;font-size:11px;line-height:1.6}
+.generation-activity time{font-variant-numeric:tabular-nums;font-size:9px;color:var(--job-muted);padding-top:2px;white-space:nowrap}
+.generation-activity strong{font-size:11px;font-weight:700}.generation-activity p{margin:4px 0 0;color:var(--job-muted);font-size:11px}
+.generation-activity .generation-persistence-note{font-size:10px;padding-top:10px;border-top:1px solid var(--job-border)}
+@media(max-width:760px){.generation-detail-grid{grid-template-columns:1fr;gap:24px}.generation-activity{padding:20px 0 0;border-left:0;border-top:1px solid var(--job-border)}.generation-heading h3{font-size:18px}.generation-heading{padding-inline:0}.generation-activity li{grid-template-columns:62px 1fr}}
+@media(prefers-reduced-motion:reduce){.loader-fruit-slot{animation:none}.job-view .generation-progress i{transition:none}}
+.generation-workspace{padding:24px}
+@media(max-width:760px){.generation-workspace{padding:18px}}
