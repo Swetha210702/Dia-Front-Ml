@@ -1,0 +1,12 @@
+{
+  "name": "dia-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "check": "node --check src/app.js && node --check src/core/store.js && node --check src/core/ui.js && node --check src/modules/views.js && node --check src/core/dropdowns.js && node --check src/core/rich-text.js && node --check src/core/intake.js && node --check src/modules/intake-view.js",
+    "test": "node --test tests/*.test.js"
+  }
+}
