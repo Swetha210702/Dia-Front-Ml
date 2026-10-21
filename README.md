@@ -24,7 +24,7 @@ First sign-in requires general profile, company details, and simulated bank veri
 - Per-client questionnaire drafts, autosave, refresh/resume, review, and optional client-record updates.
 - Standard, Pro, and Plus model previews, simulated generation events, credit deductions, retries, cancellation, and refunds.
 - Generation history and background status tracking.
-- Report studio with editable meals, quantities, calories, logos, colours, typography, layout, and templates.
+- Report studio with editable meals, quantities, calories, logos, colours, typography, and layout.
 - Selection-based bold, italic, underline, strikethrough, lists, alignment, undo/redo, and clear formatting for document introduction and guidance.
 - 38 font families, custom installed-font names, 8–72 px text, heading sizes, line/paragraph spacing, margins, A4/Letter/Legal, portrait/landscape, table spacing, and footer controls.
 - Drafts, duplication, publication to the client record, and preserved published versions when editing.
@@ -90,3 +90,7 @@ The tests cover mandatory answers, optional fields, agreement validation, allowe
 The supplied fruit CSS reference is adapted and namespaced in `src/styles/reference-fruits.css`. Its original credits are preserved: https://codepen.io/munkholm/pen/twuiD and https://justynabie.github.io/iFruity/.
 
 Manrope and DM Mono fonts are distributed with their SIL Open Font License files in `public/assets/fonts/`. The Dietograms logo was supplied by the project owner.
+
+## GitHub Pages
+
+The demo is published from main / (root) at https://swetha210702.github.io/Dia-Front-Ml/. Relative asset paths and module-relative logo URLs support both localhost and the GitHub repository subpath. The .nojekyll file keeps the frontend as plain static assets. Push changes to main to trigger the configured Pages deployment; no Node server runs on GitHub Pages.

@@ -1,5 +1,6 @@
+export const logoUrl=new URL('../../public/assets/dietograms-logo.png',import.meta.url).href;
 export const fontFamilies=['Manrope','DM Mono','Arial','Aptos','Calibri','Cambria','Candara','Century Gothic','Comic Sans MS','Consolas','Constantia','Corbel','Courier New','Franklin Gothic Medium','Garamond','Georgia','Gill Sans','Helvetica','Helvetica Neue','Impact','Lucida Console','Lucida Sans Unicode','Optima','Palatino','Palatino Linotype','Segoe UI','Tahoma','Times New Roman','Trebuchet MS','Verdana','Baskerville','Didot','Futura','Menlo','Monaco','Book Antiqua','Arial Narrow','system-ui'];
-export const brandLogo=()=>'<img class="dietograms-logo" src="/public/assets/dietograms-logo.png" alt="Dietograms — Nutrition Intelligence">';
+export const brandLogo=()=>`<img class="dietograms-logo" src="${logoUrl}" alt="Dietograms — Nutrition Intelligence">`;
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const initials=name=>name.split(' ').map(x=>x[0]).slice(0,2).join('');
 export const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(n);

@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile,access} from 'node:fs/promises';
+import {logoUrl} from '../src/core/ui.js';
+const root=new URL('../',import.meta.url);
+const deployedRoot=new URL('https://swetha210702.github.io/Dia-Front-Ml/');
+test('entry-page styles and script resolve inside the GitHub Pages project path',async()=>{const html=await readFile(new URL('index.html',root),'utf8');const refs=[...html.matchAll(/(?:href|src)="([^"]+)"/g)].map(m=>m[1]);assert.ok(refs.length>=4);for(const ref of refs){assert.ok(!ref.startsWith('/'),ref);assert.ok(new URL(ref,deployedRoot).href.startsWith(deployedRoot.href),ref);await access(new URL(ref,root))}});
+test('brand fonts resolve from the stylesheet under the repository prefix',async()=>{const cssUrl=new URL('src/styles/site-brand.css',root);const css=await readFile(cssUrl,'utf8');const refs=[...css.matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g)].map(m=>m[1]);assert.equal(refs.length,7);for(const ref of refs){await access(new URL(ref,cssUrl));assert.ok(new URL(ref,new URL('src/styles/site-brand.css',deployedRoot)).href.startsWith(deployedRoot.href))}});
+test('shared logo resolves relative to its module without hardcoded hosting assumptions',async()=>{await access(new URL(logoUrl));const ui=await readFile(new URL('src/core/ui.js',root),'utf8');assert.ok(ui.includes("new URL('../../public/assets/dietograms-logo.png',import.meta.url)"));assert.equal(new URL('../../public/assets/dietograms-logo.png',new URL('src/core/ui.js',deployedRoot)).href,deployedRoot.href+'public/assets/dietograms-logo.png')});
+test('fruit preview resolves the shared UI and styles one level above public',async()=>{const pageUrl=new URL('public/fruit-preview.html',root);const html=await readFile(pageUrl,'utf8');assert.ok(html.includes('href="../src/styles/app.css"'));assert.ok(html.includes("from '../src/core/ui.js'"));await access(new URL('../src/styles/app.css',pageUrl));await access(new URL('../src/core/ui.js',pageUrl))});
