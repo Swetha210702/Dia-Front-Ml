@@ -14,7 +14,7 @@ Open http://localhost:5173.
 
 Demo login: **demo@dia.app** / **DiaDemo123!**
 
-First sign-in requires general profile, company details, and simulated bank verification before the dashboard opens. Use sample information. Full account numbers and routing codes are discarded when the banking step is submitted.
+First sign-in requires a general profile, company details, and professional credibility before the dashboard opens. Credibility includes years of experience, a professional description, and a PDF/PNG/JPG certification upload (up to 2 MB). Uploads stay in this browser and are not independently verified. The former bank step and bank fields have been removed.
 
 ## Features
 
@@ -23,7 +23,7 @@ First sign-in requires general profile, company details, and simulated bank veri
 - Editable client records, notes, diet plans, saved questionnaires, and progress check-ins.
 - Per-client questionnaire drafts, autosave, refresh/resume, review, and optional client-record updates.
 - Standard, Pro, and Plus model previews, simulated generation events, credit deductions, retries, cancellation, and refunds.
-- Generation history with persistent, timestamped phase updates and background status tracking.
+- Client & business analysis replaces the standalone generation-history module. Client plan history retains all saved versions, assessment snapshots, and generation phase updates.
 - Seamless navigation without artificial page loaders; a compact, centred three-fruit loading indicator appears only during generation.
 - Report studio with editable meals, quantities, calories, logos, colours, typography, and layout.
 - Selection-based bold, italic, underline, strikethrough, lists, alignment, undo/redo, and clear formatting for document introduction and guidance.
@@ -37,14 +37,14 @@ First sign-in requires general profile, company details, and simulated bank veri
 
 The creation flow has six stages:
 
-1. **Personal details:** client name, gym name, age, gender, height, weight, and goal.
+1. **Personal details:** client name, age, gender, height, weight, and goal.
 2. **Routine & lifestyle:** wake/sleep times, occupation, occupational schedule, lifestyle, and workout type/timing/duration.
 3. **Medical history:** conditions and onset, medications, procedures, supplements, and openness to supplement suggestions.
 4. **Food habits:** breakfast/lunch/dinner recall and timing, snacks and timing, allergies, and Veg/Non veg/Eggitarian preference. Foods liked and additional details are optional.
 5. **Review & generate:** review the complete assessment, configure the plan, record client agreement, and acknowledge practitioner review.
 6. **Generation:** follow each simulated event and open the resulting draft.
 
-All 24 required questionnaire answers and the client-agreement record are validated before generation can use credits. Enter an explicit None or No gym when appropriate. Older clients are not assigned invented health answers or agreement. Selecting **Also save this questionnaire** stores the assessment in the client’s Questionnaire tab; otherwise the answers remain in the draft and generated plan context.
+All 23 required questionnaire answers and the client-agreement record are validated before generation can use credits. Enter an explicit None where an optional-history question does not apply. Older clients are not assigned invented health answers or agreement. Selecting **Also save this questionnaire** stores the assessment in the client’s Questionnaire tab; otherwise the answers remain in the draft and generated plan context.
 
 ## Branding
 
@@ -54,7 +54,7 @@ Fruit illustrations are CSS-only, have black silhouette outlines, and appear in 
 
 ## Demo boundaries
 
-Authentication, verification, model responses, model capabilities, credits, prices, purchases, and invoices are illustrative. No clinical model, payment processor, bank, email service, or production database is connected. Data is saved in the current browser and is not shared across devices. Do not enter real sensitive client or financial information.
+Authentication, verification, model responses, model capabilities, credits, prices, purchases, and invoices are illustrative. No clinical model, payment processor, email service, or production database is connected. Data is saved in the current browser and is not shared across devices. Do not enter real sensitive client or financial information.
 
 Generation produces a sample daily meal guide repeated across the selected duration. The full questionnaire is attached to the generation job and plan context for future backend integration, but clinical conditions, restrictions, cuisine, and preparation requirements are not interpreted by a clinical model. Review all sample outputs before use.
 
@@ -99,3 +99,26 @@ The demo is published from main / (root) at https://swetha210702.github.io/Dia-F
 Dark mode uses a chat-style charcoal palette (#212121 canvas, #171717 navigation), neutral elevated surfaces, grey borders, and light primary actions. Light mode retains the supplied #ECEAE3 background and Dietograms colours.
 
 The refined light theme retains the #ECEAE3 canvas while using white working cards, forest-green primary actions, an amber hero action, and restrained mint/blue/amber/lilac metric accents. Form controls use clear green focus/selection states. The light-only stylesheet does not change the charcoal dark theme.
+
+## October workflow updates
+
+- Wider global client search with sorted suggestions, keyboard navigation, empty states, and direct client opening.
+- Light/dark dashboard dimensions match; theme switching preserves current form and document state.
+- Subscription tier appears beside the practitioner identity. The Dietograms logo uses a white presentation in both themes.
+- The document editor supports direct page edits, 38 fonts, text sizes/colours/highlighting, headings, lists, alignment, indentation, undo/redo, links, images, editable tables with added rows/columns, page breaks, page setup, logo alignment, and existing PDF/Word-compatible/JSON exports. This is a browser document editor, not Microsoft Word or Google Docs. Word export remains HTML-based .doc, not native DOCX.
+- Revise plan opens the saved questionnaire for editing and creates a separate numbered draft after generation. Older plans and their questionnaire snapshots remain available. Editing a published document creates a draft copy.
+- Client plan history is linked from Track progress. Check-ins can reference a particular plan version.
+- Client/business analysis uses actual browser records: goals, dietary patterns, status, check-ins, revisions, credit use and simulated subscription spend. It does not invent client revenue.
+- Notifications includes opt-in follow-up and month-end settings, client selection, trigger time, reminder-only or automatic-draft mode, a manual demo trigger, and a retryable activity log. Drafts use credits, require a complete saved questionnaire and client agreement, and never publish automatically.
+- Triggers run only while this browser workspace is open. Check-in reminders are evaluated when the workspace resumes. A backend scheduler and model-event integration are still needed for reliable closed-browser scheduling and actual generation.
+- New module checks: `npm test`; browser document checks: `/tests/browser-check.html`.
+
+The reviewed frontend changes are included in this repository. GitHub Pages deploys the main branch.
+
+## Document layout refinement
+
+- Fixed physical A4, Letter and Legal pages, portrait/landscape, manual Add page and page-break controls, automatic text/table overflow with repeated headers, numbered anchored footers and a pageless option.
+- Visible inserted table grids, table properties for width/alignment/indent/spacing/border width-style-colour, independent cell margins, cell/header colours, text alignment, row height and column width. Row/column insertion/deletion, merge-right, split-cell, and delete-table controls are included.
+- Click the logo area on any page to open upload and branding controls; set logo width, height, alignment and repeat-on-pages preference. Footer text and page margins are configurable.
+- Browser layout checks are at `/tests/page-layout-check.html`; existing document checks remain at `/tests/browser-check.html`. Extremely large indivisible blocks display an overflow notice so they can be resized.
+- Browser print/PDF uses physical page sizing. Word-compatible export remains HTML-based, so native Word pagination and footer support can vary.

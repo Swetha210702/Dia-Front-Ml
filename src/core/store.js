@@ -1,3 +1,4 @@
+import {automationDefaults} from './workflows.js';
 export const demoCredentials={email:'demo@dia.app',password:'DiaDemo123!'};
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const seed={session:false,onboarded:false,profile:{name:'Dr. Maya Sharma',title:'Clinical Nutritionist',email:'demo@dia.app',phone:'',company:'Nourish Nutrition Studio',country:'India',timezone:'Asia/Kolkata'},setupStep:0,setup:{},tourDone:false,tier:'Pro',credits:240,clients:[
@@ -14,11 +15,13 @@ try{state=JSON.parse(localStorage.getItem('dia-demo-v1'))||structuredClone(seed)
 try{state.session=state.session||sessionStorage.getItem('dia-session')==='true'}catch{}
 export function save(){try{sessionStorage.setItem('dia-session',String(state.session));localStorage.setItem('dia-demo-v1',JSON.stringify({...state,session:state.remember?state.session:false}))}catch{return false}return true}
 state.theme=state.theme||'light';
+state.automations={...structuredClone(automationDefaults),...state.automations};
+for(const record of [state.profile,state.setup])for(const key of ['bank','bankLast4','holder','account','confirmAccount','routing','accountType'])delete record[key];
 state.intakeDrafts=state.intakeDrafts||{};
 // Remove the retired module from existing browser workspaces.
 if(Object.hasOwn(state,'templates')){delete state.templates;save()}
 for(const plan of state.plans){if(plan.style.colour==='#24574b')plan.style.colour='#280c48'}
-export function reset(){state=structuredClone(seed);state.intakeDrafts={};save()}
+export function reset(){state=structuredClone(seed);state.intakeDrafts={};state.automations=structuredClone(automationDefaults);save()}
 export const now=today;
 export const uid=(prefix)=>prefix+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,5);
 export const getClient=id=>state.clients.find(c=>c.id===id);
