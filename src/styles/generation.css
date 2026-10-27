@@ -33,3 +33,4 @@ html[data-theme=dark] .job-view{--job-accent:#e3e3e3;--job-border:#424242;--job-
 @media(prefers-reduced-motion:reduce){.loader-fruit-slot{animation:none}.job-view .generation-progress i{transition:none}}
 .generation-workspace{padding:24px}
 @media(max-width:760px){.generation-workspace{padding:18px}}
+.generation-tier-summary>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);background:var(--surface-alt);border-radius:7px}.generation-tier-summary>div strong{font-size:14px;color:var(--ink)}.generation-tier-summary>div span,.generation-tier-summary>small{font-size:10px;color:var(--muted)}.generation-tier-summary a{color:var(--brand);text-decoration:underline}.generation-heading .generation-tier-used{font-size:11px;color:var(--job-muted);margin:8px 0 0}

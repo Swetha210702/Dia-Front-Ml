@@ -25,7 +25,7 @@ export function jobView(j){
    ${running?`<div class="compact-fruit-loader" role="status" aria-label="Loading diet plan"><div class="compact-fruit-row" aria-hidden="true">${['apple','orange','grapes'].map(type=>`<span class="loader-fruit-slot">${fruit(type)}</span>`).join('')}</div><span>Loading<span class="loading-ellipsis">…</span></span></div>`:'<span class="generation-result" aria-hidden="true">'+(completed?'✓':'—')+'</span>'}
    <h3>${running?'Your diet plan is taking shape':completed?'Your draft is ready':'Generation '+(j.status==='Failed'?'needs attention':'cancelled')}</h3>
    <p class="muted">${running?'Follow each phase below. You can leave this page and return anytime.':esc(j.error||'Review the sample plan before you publish.')}</p>
-   <span class="generation-demo-label">Demo generation · simulated phases</span>
+   <span class="generation-demo-label">Demo generation · simulated phases</span><p class="generation-tier-used">${esc(j.model)} plan · ${j.cost} credits</p>
   </div>
   <div class="generation-live-status" role="status" aria-live="polite" aria-atomic="true"><strong>${running?esc(current.title):esc(j.status)}</strong><span>${running?esc(current.detail):esc(j.error||current.detail)}</span></div>
   <div class="progress-caption"><span>${completed?'Draft saved':running?'Generation progress':esc(j.status)}</span><strong>${progress}%</strong></div>
