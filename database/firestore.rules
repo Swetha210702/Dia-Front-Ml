@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function own(w) { return request.auth != null && request.auth.uid == w; }
+  function workspace(w) { return own(w) && get(/databases/$(database)/documents/workspaces/$(w)).data.ownerId == request.auth.uid; }
+  match /workspaces/{w} {
+   allow get: if own(w);
+   allow create: if own(w) && request.resource.data.keys().hasOnly(['ownerId','schemaVersion','createdAt']) && request.resource.data.ownerId == request.auth.uid && request.resource.data.schemaVersion == 1 && request.resource.data.createdAt == request.time;
+   allow update, delete, list: if false;
+   function envelope(id) {
+    let d=request.resource.data;
+    return d.keys().hasOnly(['workspaceId','id','schemaVersion','createdBy','createdAt','updatedAt','revision','active','payload']) && d.workspaceId == w && d.id == id && d.schemaVersion == 1 && d.createdBy == request.auth.uid && d.updatedAt == request.time && d.active is bool && d.payload is map && d.revision is int;
+   }
+   function createMeta(id) {let d=request.resource.data;return d.createdAt == request.time && d.revision == 1 && d.active == true;}
+   function updateMeta() {let d=request.resource.data;return d.createdAt == resource.data.createdAt && d.createdBy == resource.data.createdBy && d.revision == resource.data.revision+1;}
+   function validClient(p,id) {return p.id == id && p.name is string && p.name.size()>0 && p.name.size()<=200 && p.email is string && p.email.size()<=254 && p.age is number && p.age>=1 && p.age<=120 && p.height is number && p.height>=30 && p.height<=250 && p.weight is number && p.weight>=1 && p.weight<=400 && p.target is number && p.target>=1 && p.target<=400 && p.status in ['Active','Paused','Archived'];}
+   function validPayload(c,id) {
+    let p=request.resource.data.payload;
+    return (c=='clients' && validClient(p,id)) ||
+     (c=='settings' && id=='profile' && p.keys().hasOnly(['profile','setup','setupStep','onboarded','tourDone','lastIntakeClientId']) && p.profile is map && p.setup is map && p.setupStep is int && p.setupStep>=0 && p.setupStep<=3 && p.onboarded is bool && p.tourDone is bool && !p.profile.keys().hasAny(['certification']) && !p.setup.keys().hasAny(['certification'])) ||
+     (c=='settings' && id=='automation' && p.enabled is bool && p.mode in ['remind','generate'] && p.clientIds is list && p.runs == {}) ||
+     (c=='assessments' && p.id==id && p.answers is map && p.step is int && p.step>=0 && p.step<=5) ||
+     (c=='checkins' && p.id==id && p.clientId is string && exists(/databases/$(database)/documents/workspaces/$(w)/clients/$(p.clientId)) && p.weight is number && p.weight>=1 && p.weight<=400 && p.adherence is number && p.adherence>=0 && p.adherence<=100 && p.energy is number && p.energy>=1 && p.energy<=5 && p.date is string) ||
+     (c=='trash' && p.id==id && p.type in ['client','plan','checkin'] && p.record is map) ||
+     (c=='activity' && p.id==id && p.action is string && p.entity is string && p.label is string && p.at is number) ||
+     (c=='notificationReads' && p.keys().hasOnly(['id','read']) && p.id==id && p.read is bool && exists(/databases/$(database)/documents/workspaces/$(w)/notifications/$(id)));
+   }
+   match /{c}/{id} {
+    allow read: if workspace(w) && c in ['settings','clients','assessments','plans','checkins','trash','activity','notificationReads','generations','invoices','creditLedger','notifications','entitlements','files'];
+    allow create: if workspace(w) && envelope(id) && createMeta(id) && validPayload(c,id);
+    allow update: if workspace(w) && envelope(id) && updateMeta() && validPayload(c,id);
+    // Original plans are server-created. Draft copies preserve generation/tier metadata.
+    allow create: if workspace(w) && c=='plans' && envelope(id) && createMeta(id) && draftCopy();
+    allow update: if workspace(w) && c=='plans' && envelope(id) && updateMeta() && editPlan();
+    allow delete: if false;
+    function draftCopy() {
+     let p=request.resource.data.payload;
+     let source=get(/databases/$(database)/documents/workspaces/$(w)/plans/$(p.parentId)).data.payload;
+     return p.id==id && p.status=='Draft' && p.clientId==source.clientId && p.model==source.model && p.cost==source.cost && p.version>source.version;
+    }
+    function editPlan() {
+     let p=request.resource.data.payload;
+     return p.id==id && p.diff(resource.data.payload).affectedKeys().hasOnly(['name','status','published','updatedAt','style','meals','calories','instructions','documentHtml','documentPages','documentManualBreaks','contentVersion','editedAt']) && (resource.data.payload.status=='Draft' || p==resource.data.payload) && p.status in ['Draft','Published'];
+    }
+   }
+  }
+  match /{path=**} { allow read,write: if false; }
+ }
+}

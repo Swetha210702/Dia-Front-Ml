@@ -10,3 +10,6 @@ npm-debug.log*
 coverage/
 work/
 outputs/
+dist/
+.firebase/
+*service-account*.json

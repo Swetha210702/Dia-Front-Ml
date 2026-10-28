@@ -12,7 +12,14 @@ export function saveDocumentToPlan(article,plan){
  const previousMeals=plan.meals;
  plan.meals=rows.map((row,nextIndex)=>{const meal={...(previousMeals[Number(row.dataset.mealRow)]||{name:'Meal',time:'',food:'',portion:'',calories:0})};for(const key of ['name','time','food','portion','calories']){const field=row.querySelector(`[data-meal-field="${key}"]`);if(!field){meal[key]=key==='calories'?0:'';continue}const value=field.textContent.trim();if(key==='calories')meal[key]=Number.isFinite(Number(value))&&Number(value)>=0&&Number(value)<=5000?Number(value):0;else meal[key]=value}row.dataset.mealRow=nextIndex;return meal});
  const total=article.querySelector('.report-total strong');if(total){const value=plan.meals.reduce((sum,m)=>sum+Number(m.calories),0)+' kcal';if(total.textContent!==value)total.textContent=value}
- const footer=article.querySelector('.report-footer span');if(footer){const value=`${plan.status} · Version ${plan.version} · Sample plan`;if(footer.textContent!==value)footer.textContent=value}
+ const footer=article.querySelector('.report-footer span');if(footer){const value=`${plan.status} · Version ${plan.version}`;if(footer.textContent!==value)footer.textContent=value}
  plan.documentHtml=cleanRichText(article.innerHTML);
 }
 export function printableDocument(html){const doc=new DOMParser().parseFromString(html,'text/html');doc.querySelectorAll('.sheet-logo-button').forEach(button=>button.replaceWith(...button.querySelectorAll('img')));doc.querySelectorAll('.sheet-page-label').forEach(node=>node.remove());doc.querySelectorAll('[contenteditable],[data-document]').forEach(el=>{el.removeAttribute('contenteditable');el.removeAttribute('role');el.removeAttribute('aria-label');el.removeAttribute('aria-multiline');el.removeAttribute('data-document')});return doc.body.innerHTML}
+
+export function setDocumentTitle(plan,title){
+ plan.name=title;
+ const update=html=>{const doc=new DOMParser().parseFromString(html,'text/html');let heading=doc.querySelector('[data-doc-field="name"]');const block=doc.querySelector('.report-title');if(!heading&&block){heading=doc.createElement('h1');heading.dataset.docField='name';const kicker=block.querySelector('.report-kicker');if(kicker)kicker.after(heading);else block.prepend(heading)}if(heading)heading.textContent=title;return cleanRichText(doc.body.innerHTML)};
+ if(plan.documentPages)plan.documentPages=plan.documentPages.map(update);
+ if(plan.documentHtml)plan.documentHtml=update(plan.documentHtml);
+}

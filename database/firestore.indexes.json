@@ -1,0 +1,142 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "clients",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "deletedAt",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "nameSort",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "plans",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "clientId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "deletedAt",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "checkins",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "clientId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "deletedAt",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "date",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "generations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "clientId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "startedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "recipientUid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "read",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "assessments",
+      "fieldPath": "answers",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "plans",
+      "fieldPath": "documentPages",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "settings",
+      "fieldPath": "payload",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "clients",
+      "fieldPath": "payload",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "plans",
+      "fieldPath": "payload",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "assessments",
+      "fieldPath": "payload",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "checkins",
+      "fieldPath": "payload",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "trash",
+      "fieldPath": "payload",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "activity",
+      "fieldPath": "payload",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "notificationReads",
+      "fieldPath": "payload",
+      "indexes": []
+    }
+  ]
+}

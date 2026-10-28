@@ -1,31 +1,19 @@
-import {automationDefaults} from './workflows.js';
-export const demoCredentials={email:'demo@dia.app',password:'DiaDemo123!'};
-const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-const seed={session:false,onboarded:false,profile:{name:'Dr. Maya Sharma',title:'Clinical Nutritionist',email:'demo@dia.app',phone:'',company:'Nourish Nutrition Studio',country:'India',timezone:'Asia/Kolkata'},setupStep:0,setup:{},tourDone:false,tier:'Pro',credits:240,clients:[
-{id:'DIA-1001',name:'Ananya Rao',email:'ananya@example.com',phone:'+91 98765 10001',age:29,height:165,weight:72,target:65,activity:'Moderately active',goal:'Weight management',diet:'Vegetarian',cuisine:'Indian',allergies:'Peanuts',conditions:'None reported',notes:'Prefers quick weekday meals. Follow up every fortnight.',status:'Active',colour:'rose',joined:'2026-09-20'},
-{id:'DIA-1002',name:'Rohan Mehta',email:'rohan@example.com',phone:'+91 98765 10002',age:34,height:178,weight:83,target:78,activity:'Very active',goal:'Muscle gain',diet:'Non-vegetarian',cuisine:'Mediterranean',allergies:'None',conditions:'None reported',notes:'Strength training four times a week.',status:'Active',colour:'blue',joined:'2026-09-26'},
-{id:'DIA-1003',name:'Priya Nair',email:'priya@example.com',phone:'+91 98765 10003',age:41,height:159,weight:64,target:60,activity:'Lightly active',goal:'Maintenance',diet:'Vegan',cuisine:'Indian',allergies:'Dairy',conditions:'Practitioner review required',notes:'Enjoys seasonal produce and home cooking.',status:'Active',colour:'green',joined:'2026-10-01'},
-{id:'DIA-1004',name:'Arjun Patel',email:'arjun@example.com',phone:'+91 98765 10004',age:26,height:181,weight:76,target:76,activity:'Moderately active',goal:'Maintenance',diet:'Vegetarian',cuisine:'Mixed',allergies:'None',conditions:'None reported',notes:'Travels frequently.',status:'Paused',colour:'purple',joined:'2026-10-06'}],
-plans:[{id:'PLAN-1001',clientId:'DIA-1001',name:'Balanced beginnings',status:'Published',version:1,created:'2026-10-10',days:7,calories:1800,model:'Pro',instructions:'Focus on consistency, hydration, and meals prepared at home.',meals:[{time:'8:00 AM',name:'Breakfast',food:'Oats with yoghurt, berries and seeds',portion:'1 bowl',calories:380},{time:'11:00 AM',name:'Morning snack',food:'Apple and pumpkin seeds',portion:'1 apple + 15 g seeds',calories:180},{time:'1:00 PM',name:'Lunch',food:'Lentil dal, brown rice and seasonal vegetables',portion:'1 balanced plate',calories:520},{time:'4:00 PM',name:'Afternoon snack',food:'Roasted chickpeas and herbal tea',portion:'35 g',calories:160},{time:'7:30 PM',name:'Dinner',food:'Paneer, vegetable stir-fry and whole-wheat roti',portion:'1 balanced plate',calories:560}],style:{font:'Arial',size:14,colour:'#24574b',align:'left',logoAlign:'left',notes:'This sample plan needs practitioner review before use.'}},
-{id:'PLAN-1002',clientId:'DIA-1002',name:'Training day nutrition',status:'Draft',version:1,created:'2026-10-12',days:7,calories:2400,model:'Pro',instructions:'Review meal timing around training.',meals:[{time:'8:00 AM',name:'Breakfast',food:'Eggs, whole-grain toast and fruit',portion:'1 plate',calories:600},{time:'1:00 PM',name:'Lunch',food:'Chicken, rice and roasted vegetables',portion:'1 plate',calories:800},{time:'7:00 PM',name:'Dinner',food:'Fish, potatoes and salad',portion:'1 plate',calories:1000}],style:{font:'Arial',size:14,colour:'#24574b',align:'left',logoAlign:'left',notes:'Review all quantities and client restrictions.'}}],
-progress:[{id:'CHECK-1',clientId:'DIA-1001',date:'2026-09-20',weight:72,adherence:65,energy:3,notes:'Starting check-in'},{id:'CHECK-2',clientId:'DIA-1001',date:'2026-09-27',weight:71.3,adherence:78,energy:4,notes:'Meal prep going well'},{id:'CHECK-3',clientId:'DIA-1001',date:'2026-10-04',weight:70.7,adherence:86,energy:4,notes:'Consistent hydration'},{id:'CHECK-4',clientId:'DIA-1001',date:'2026-10-11',weight:70.2,adherence:90,energy:5,notes:'Feeling more energetic'}],
-jobs:[],invoices:[{id:'INV-2026-010',date:'2026-10-01',description:'Pro · monthly subscription',amount:1999,status:'Paid'},{id:'INV-2026-009',date:'2026-09-18',description:'100-credit top-up',amount:499,status:'Paid'}],creditHistory:[{date:'2026-10-01',description:'Pro monthly allowance',amount:250},{date:'2026-10-10',description:'Balanced beginnings · Pro',amount:-5},{date:'2026-10-12',description:'Training day nutrition · Pro',amount:-5}],notifications:[{id:'n1',title:'Ananya’s follow-up is due',detail:'Review her latest check-in and plan.',read:false},{id:'n2',title:'Your Pro workspace is ready',detail:'240 credits available for your next plan.',read:false}]};
-export let state;
-try{state=JSON.parse(localStorage.getItem('dia-demo-v1'))||structuredClone(seed)}catch{state=structuredClone(seed)}
-try{state.session=state.session||sessionStorage.getItem('dia-session')==='true'}catch{}
-export function save(){try{sessionStorage.setItem('dia-session',String(state.session));localStorage.setItem('dia-demo-v1',JSON.stringify({...state,session:state.remember?state.session:false}))}catch{return false}return true}
-state.theme=state.theme||'light';
-state.automations={...structuredClone(automationDefaults),...state.automations};
-for(const record of [state.profile,state.setup])for(const key of ['bank','bankLast4','holder','account','confirmAccount','routing','accountType'])delete record[key];
-state.intakeDrafts=state.intakeDrafts||{};
-// Remove the retired module from existing browser workspaces.
-if(Object.hasOwn(state,'templates')){delete state.templates;save()}
-for(const plan of state.plans){if(plan.style.colour==='#24574b')plan.style.colour='#280c48'}
-export function reset(){state=structuredClone(seed);state.intakeDrafts={};state.automations=structuredClone(automationDefaults);save()}
-export const now=today;
-export const uid=(prefix)=>prefix+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,5);
-export const getClient=id=>state.clients.find(c=>c.id===id);
-export const getPlan=id=>state.plans.find(p=>p.id===id);
+import {emptyWorkspace} from './workspace-state.js';
+
+// Only appearance preferences are browser-persistent. Workspace records must be
+// loaded through an authenticated repository; legacy browser records are not imported.
+let theme='light';
+try { theme=localStorage.getItem('dietograms-theme')||'light'; } catch {}
+export const state=emptyWorkspace(theme);
+export function save() {
+  try { localStorage.setItem('dietograms-theme',state.theme); return true; }
+  catch { return false; }
+}
+export const now=()=>new Intl.DateTimeFormat('en-CA',{
+  timeZone:state.profile.timezone||'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'
+}).format(new Date());
+export const uid=prefix=>`${prefix}-${crypto.randomUUID()}`;
+export const getClient=id=>state.clients.find(client=>client.id===id);
+export const getPlan=id=>state.plans.find(plan=>plan.id===id);
 export {models} from './generation-tier.js';
 export {stages} from './generation.js';
-export function makeMeals(client,calories){const diet=client.diet;const foods=diet==='Eggitarian'?['Eggs with whole-grain toast and fruit','Apple and yoghurt','Lentil dal, rice and mixed vegetables','Roasted chickpeas','Egg curry with whole-wheat roti and salad']:diet==='Vegan'?['Oats with fortified oat milk and berries','Pear and pumpkin seeds','Chickpea bowl with rice and vegetables','Hummus with carrot sticks','Tofu, vegetables and quinoa']:diet==='Non-vegetarian'?['Eggs, whole-grain toast and fruit','Apple and yoghurt','Chicken, brown rice and vegetables','Roasted chickpeas','Fish with potatoes and salad']:['Oats with yoghurt and seasonal fruit','Apple and pumpkin seeds','Dal, brown rice and mixed vegetables','Roasted chickpeas and herbal tea','Paneer, vegetables and whole-wheat roti'];return foods.map((food,i)=>({time:['8:00 AM','11:00 AM','1:00 PM','4:00 PM','7:30 PM'][i],name:['Breakfast','Morning snack','Lunch','Afternoon snack','Dinner'][i],food,portion:['1 bowl','1 portion','1 balanced plate','1 portion','1 balanced plate'][i],calories:Math.round(calories*[.22,.1,.3,.08,.3][i])}))}

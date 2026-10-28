@@ -102,7 +102,7 @@ html:not([data-theme=dark]) .document-canvas{background:#e2e8df;border-color:#d1
 html:not([data-theme=dark]) .rich-toolbar{background:#fff;border-color:#dce5db;border-radius:8px}
 html:not([data-theme=dark]) .format-button{background:#f8fbf7;border-color:#dce6d8;color:#48614c}
 html:not([data-theme=dark]) .format-button:hover{background:#e7f3e6;color:#2e713e}
-html:not([data-theme=dark]) .demo-pill{background:#eef5e9;border-color:#d7e5cb;color:#57714e}
+html:not([data-theme=dark]) .workspace-pill{background:#eef5e9;border-color:#d7e5cb;color:#57714e}
 html:not([data-theme=dark]) .toast{background:#235e3d;color:#fff;border:1px solid #3f8055;box-shadow:0 6px 18px #17392220}
 html:not([data-theme=dark]) .workspace-footer{border-color:#d9e0d5;color:#5d6b63}
 @media(max-width:760px){html:not([data-theme=dark]) .intake-banner{padding:23px 20px}html:not([data-theme=dark]) .hero-panel h2{font-size:29px}html:not([data-theme=dark]) .hero-panel{padding:24px}}

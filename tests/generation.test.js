@@ -1,24 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {recordPhases,activityFor,generationProgress,generationPhases,DEMO_PHASE_MS} from '../src/core/generation.js';
-const job=()=>({stage:0,status:'Running',started:1000});
-test('resuming a background job retains every phase in order without duplicates',()=>{
- const j=job();recordPhases(j,0,1000);recordPhases(j,4,11000);recordPhases(j,4,11500);
- assert.deepEqual(j.events.map(e=>e.phase),[0,1,2,3,4]);
- assert.deepEqual(j.events.map(e=>e.at),[1000,3500,6000,8500,11000]);
- assert.equal(j.events.at(-1).title,generationPhases[4].title);
-});
-test('progress reaches 100 only once the report is successfully saved',()=>{
- const j=job();recordPhases(j,5,1000+5*DEMO_PHASE_MS);
- assert.equal(generationProgress(j),95);j.status='Failed';assert.equal(generationProgress(j),95);
- j.status='Completed';assert.equal(generationProgress(j),100);
-});
-test('existing saved jobs still expose their completed phase history',()=>{
- const j={...job(),stage:3};assert.equal(activityFor(j).length,4);
- assert.equal(activityFor(j)[3].title,generationPhases[3].title);
- assert.equal(j.events,undefined);
-});
-test('cancellation preserves all prior updates and stops short of completion',()=>{
- const j=job();recordPhases(j,2,6000);j.status='Cancelled';
- assert.equal(generationProgress(j),40);assert.equal(activityFor(j).length,3);
-});
+import {applyGenerationEvent,activityFor,generationProgress} from '../src/core/generation.js';
+const job=()=>({id:'job-1',stage:0,status:'Running',started:1000,model:'Plus',cost:8});
+const event=(sequence,phase,status='Running')=>({jobId:'job-1',sequence,phase,status,at:1000+sequence*100});
+test('only received backend events appear in activity, with their actual timestamps',()=>{const j=job();assert.deepEqual(activityFor(j),[]);applyGenerationEvent(j,event(0,0));applyGenerationEvent(j,event(4,4));assert.deepEqual(activityFor(j).map(e=>e.phase),[0,4]);assert.deepEqual(activityFor(j).map(e=>e.at),[1000,1400])});
+test('duplicate and out-of-order events cannot regress progress',()=>{const j=job();applyGenerationEvent(j,event(3,3));assert.equal(applyGenerationEvent(j,event(3,3)),false);assert.equal(applyGenerationEvent(j,event(2,2)),false);assert.equal(applyGenerationEvent(j,event(4,2)),false);assert.equal(j.stage,3);assert.equal(j.events.length,1)});
+test('foreign jobs, invalid phases, status and timestamps are rejected',()=>{for(const invalid of [{jobId:'other'},{phase:6},{phase:-1},{at:NaN},{at:900},{sequence:1.5},{status:'Unknown'}]){const j=job();assert.equal(applyGenerationEvent(j,{...event(1,1),...invalid}),false);assert.equal(j.events,undefined)}});
+test('completion requires a persisted plan ID; nonterminal progress never reaches 100',()=>{const j=job();assert.equal(applyGenerationEvent(j,event(5,5,'Completed')),false);applyGenerationEvent(j,event(5,5));assert.equal(generationProgress(j),95);applyGenerationEvent(j,{...event(6,5,'Completed'),planId:'plan-1'});assert.equal(generationProgress(j),100);assert.equal(j.planId,'plan-1')});
+test('terminal events cannot be overwritten and never grant browser credits',()=>{const j=job();applyGenerationEvent(j,event(2,2,'Cancelled'));assert.equal(applyGenerationEvent(j,event(3,3)),false);assert.equal(j.status,'Cancelled');assert.equal(j.model,'Plus');assert.equal(j.cost,8);assert.equal(j.credits,undefined)});

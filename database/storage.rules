@@ -1,0 +1,9 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Upload access stays closed until authenticated membership rules are tested.
+    match /{object=**} {
+      allow read, write: if false;
+    }
+  }
+}

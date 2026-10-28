@@ -1,0 +1,717 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dietograms.com/schemas/workspace-v1.json",
+  "title": "Dietograms workspace records v1",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "workspaceId",
+        "schemaVersion",
+        "createdAt",
+        "updatedAt",
+        "createdBy",
+        "revision",
+        "deletedAt"
+      ],
+      "properties": {
+        "workspaceId": {
+          "$ref": "#/$defs/id"
+        },
+        "schemaVersion": {
+          "const": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdBy": {
+          "$ref": "#/$defs/id"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "deletedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "client": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "name",
+        "nameSort",
+        "status",
+        "age",
+        "height",
+        "weight",
+        "goal",
+        "diet"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "nameSort": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 254
+        },
+        "status": {
+          "enum": [
+            "Active",
+            "Paused",
+            "Archived"
+          ]
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120
+        },
+        "height": {
+          "type": "number",
+          "minimum": 30,
+          "maximum": 250
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 400
+        },
+        "goal": {
+          "enum": [
+            "Fat loss",
+            "Weight loss",
+            "Muscle gain",
+            "Weight gain",
+            "General healthy diet"
+          ]
+        },
+        "diet": {
+          "enum": [
+            "Vegetarian",
+            "Vegan",
+            "Non-vegetarian",
+            "Eggitarian"
+          ]
+        }
+      }
+    },
+    "assessment": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "clientId",
+        "answers",
+        "consent",
+        "version"
+      ],
+      "properties": {
+        "clientId": {
+          "$ref": "#/$defs/id"
+        },
+        "answers": {
+          "type": "object"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "consent": {
+          "type": "object",
+          "required": [
+            "accepted",
+            "recordedAt",
+            "recordedBy",
+            "policyVersion",
+            "termsVersion"
+          ],
+          "properties": {
+            "accepted": {
+              "const": true
+            },
+            "recordedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/id"
+            },
+            "policyVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "termsVersion": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "plan": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "clientId",
+        "assessmentId",
+        "name",
+        "status",
+        "version",
+        "tier",
+        "days",
+        "calories",
+        "documentStoragePath"
+      ],
+      "properties": {
+        "clientId": {
+          "$ref": "#/$defs/id"
+        },
+        "assessmentId": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "status": {
+          "enum": [
+            "Draft",
+            "Published"
+          ]
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tier": {
+          "enum": [
+            "Standard",
+            "Pro",
+            "Plus"
+          ]
+        },
+        "parentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rootPlanId": {
+          "$ref": "#/$defs/id"
+        },
+        "days": {
+          "enum": [
+            7,
+            14,
+            28
+          ]
+        },
+        "calories": {
+          "type": "integer",
+          "minimum": 800,
+          "maximum": 5000
+        },
+        "documentStoragePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publishedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "generation": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "clientId",
+        "assessmentId",
+        "requestId",
+        "tier",
+        "cost",
+        "status",
+        "sequence",
+        "phase"
+      ],
+      "properties": {
+        "clientId": {
+          "$ref": "#/$defs/id"
+        },
+        "assessmentId": {
+          "$ref": "#/$defs/id"
+        },
+        "requestId": {
+          "$ref": "#/$defs/id"
+        },
+        "tier": {
+          "enum": [
+            "Standard",
+            "Pro",
+            "Plus"
+          ]
+        },
+        "cost": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "Queued",
+            "Running",
+            "Completed",
+            "Failed",
+            "Cancelled"
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "phase": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        }
+      }
+    },
+    "checkin": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "clientId",
+        "date",
+        "weight",
+        "adherence",
+        "energy"
+      ],
+      "properties": {
+        "clientId": {
+          "$ref": "#/$defs/id"
+        },
+        "planId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 400
+        },
+        "adherence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "energy": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      }
+    },
+    "ledgerEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "idempotencyKey",
+        "kind",
+        "amount",
+        "balanceAfter"
+      ],
+      "properties": {
+        "idempotencyKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "purchase",
+            "allowance",
+            "generation",
+            "refund"
+          ]
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "balanceAfter": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "paymentEventId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "user": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "displayName",
+        "homeWorkspaceId"
+      ],
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "homeWorkspaceId": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "membership": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "uid",
+        "role",
+        "active"
+      ],
+      "properties": {
+        "uid": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "practitioner",
+            "viewer"
+          ]
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "subscription": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "tier",
+        "status",
+        "providerSubscriptionId"
+      ],
+      "properties": {
+        "tier": {
+          "enum": [
+            "Standard",
+            "Pro",
+            "Plus"
+          ]
+        },
+        "status": {
+          "enum": [
+            "active",
+            "trialing",
+            "past_due",
+            "cancelled",
+            "incomplete"
+          ]
+        },
+        "providerSubscriptionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "currentPeriodEnd": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "invoice": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "providerInvoiceId",
+        "currency",
+        "amountMinor",
+        "status"
+      ],
+      "properties": {
+        "providerInvoiceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "amountMinor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "open",
+            "paid",
+            "void",
+            "uncollectible",
+            "refunded"
+          ]
+        },
+        "paidAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "activity": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "actorUid",
+        "action",
+        "entityId",
+        "entityType",
+        "requestId"
+      ],
+      "properties": {
+        "actorUid": {
+          "$ref": "#/$defs/id"
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "entityId": {
+          "$ref": "#/$defs/id"
+        },
+        "entityType": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "requestId": {
+          "$ref": "#/$defs/id"
+        },
+        "changedFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "notification": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "recipientUid",
+        "title",
+        "read"
+      ],
+      "properties": {
+        "recipientUid": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "read": {
+          "type": "boolean"
+        },
+        "clientId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "planId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "automation": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "enabled",
+        "mode",
+        "clientIds",
+        "timezone",
+        "time"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "mode": {
+          "enum": [
+            "remind",
+            "generate"
+          ]
+        },
+        "clientIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "timezone": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string",
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "nextRunAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "file": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metadata"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "storagePath",
+        "kind",
+        "contentType",
+        "sizeBytes",
+        "uploadedBy"
+      ],
+      "properties": {
+        "storagePath": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "logo",
+            "certification",
+            "report"
+          ]
+        },
+        "contentType": {
+          "enum": [
+            "image/png",
+            "image/jpeg",
+            "application/pdf"
+          ]
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10485760
+        },
+        "uploadedBy": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    }
+  }
+}
